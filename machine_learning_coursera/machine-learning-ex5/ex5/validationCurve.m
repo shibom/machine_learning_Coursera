@@ -42,12 +42,13 @@ mval = size(Xval,1);
 m = size(X,1);
 
 for i=1:length(lambda_vec)
-    lambda = lambda_vec(i);
-    [theta] = trainLinearReg(X,y,lambda);
-    %error_train(i) = linearRegCostFunction(X, y, theta, lambda);
-    %error_val(i) = linearRegCostFunction(Xval, yval, theta, lambda);
-    error_train(i) = (1/(2*m))*sum((X*theta - y).^2);%+ (lambda/(2*m))*sum(theta(2:end).^2);
-    error_val(i) = (1/(2*mval))*sum((Xval*theta - yval).^2);%+ (lambda/(2*mval))*sum(theta(2:end).^2);
+    %lambda = lambda_vec(i);
+    [theta] = trainLinearReg(X,y,lambda_vec(i));
+    [error_train(i),~] = linearRegCostFunction(X,y,theta,0);
+    [error_val(i),~] = linearRegCostFunction(Xval,yval,theta,0);
+    
+    %error_train(i) = (1/(2*m))*sum((X*theta - y).^2);%+ (lambda/(2*m))*sum(theta(2:end).^2);
+    %error_val(i) = (1/(2*mval))*sum((Xval*theta - yval).^2);%+ (lambda/(2*mval))*sum(theta(2:end).^2);
 end
 
 

@@ -23,14 +23,16 @@ J = (1/(2*m))*sum((X*theta - y).^2);
 reg_term = (lambda/(2*m))*sum(theta(2:end).^2);
 
 J = J + reg_term;
-alpha = 1; %learning rate
+%alpha = 1; %learning rate
 
-theta0 = theta(1) - (alpha*(1/m)*sum((X*theta - y)'*X(:,1)));
-unreg_grad = theta(2:end) - (alpha*(1/m)*sum((X*theta - y)'*X(:,2:end)));
+beta = X*theta - y;
+
+theta0 = (1/m)*sum(X(:,1)'*beta);
+unreg_grad = (1/m)*(X(:,2:end)'*beta); %Don't do sum.. that was the bug!!
 
 grad(1) = theta0;
 
-grad(2:end) = unreg_grad + (lambda*theta(2:end))/m;
+grad(2:end) = unreg_grad + (lambda*(theta(2:end)))/m;
 
 
 
